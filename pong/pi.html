@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>PI</title>
+</head>
+<style>
+/* https://codepen.io/anon/pen/QzpxQv */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  background: #000;
+  height: 100%;
+  width: 100%;
+  display: block
+}
+</style>
+<body>
+<canvas id="canvas" />
+
+<script>
+var canvas = document.getElementById("canvas")
+var ctx = canvas.getContext("2d")
+var width
+var height
+
+var resize = function() {
+  width = window.innerWidth * 2
+  height = window.innerHeight * 2
+  canvas.width = width
+  canvas.height = height
+}
+window.onresize = resize
+resize()
+
+ctx.fillStyle = 'red'
+
+var state = {
+  count: 0,
+  pi: 3,
+  x: 2,
+  y: 3,
+  z: 4,
+  c: 1,
+}
+
+function update(progress) {
+  state.count += 1;
+  if(state.c % 2 == 1)
+    state.pi = state.pi + (4 / (state.x * state.y * state.z))
+  else
+    state.pi = state.pi - (4 / (state.x * state.y * state.z))
+  state.x = state.z
+  state.y = state.z + 1
+  state.z = state.z + 2
+  state.c = state.c + 1
+}
+
+function draw() {
+  ctx.clearRect(0, 0, width, height)
+
+  
+  ctx.font = '48px serif';
+  ctx.fillText(state.pi.toFixed(20), 50, 100);
+  ctx.fillText("3.14159265358979323846", 50, 150);
+  ctx.fillText(state.count, 50, 200);
+}
+
+function loop(timestamp) {
+  var progress = (timestamp - lastRender)
+
+  update(progress)
+  draw()
+  
+  lastRender = timestamp
+  window.requestAnimationFrame(loop)
+}
+var lastRender = 0
+window.requestAnimationFrame(loop)
+</script>
+</body>
+</html>
