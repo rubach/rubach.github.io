@@ -114,6 +114,14 @@ html {
 }
 
 /* Setup View styling */
+.header-image {
+    max-width: 150px;
+    height: auto;
+    margin: 0 auto 10px auto;
+    display: block;
+    image-rendering: pixelated;
+}
+
 h1 {
     font-family: 'Press Start 2P', cursive;
     color: var(--gold);
