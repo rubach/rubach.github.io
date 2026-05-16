@@ -115,9 +115,8 @@ html {
 
 /* Setup View styling */
 .header-image {
-    max-width: 150px;
-    height: auto;
-    margin: 0 auto 10px auto;
+    max-height: 75px;
+    margin: 0 auto 15px auto;
     display: block;
     image-rendering: pixelated;
 }
