@@ -1,0 +1,72 @@
+const GAMES_DATA = {
+    "tecmo_super_bowl": {
+        name: "Tecmo Super Bowl",
+        teams: [
+            "Bills", "Colts", "Dolphins", "Patriots", "Jets",
+            "Bengals", "Browns", "Oilers", "Steelers",
+            "Broncos", "Chiefs", "Raiders", "Seahawks",
+            "Redskins", "Giants", "Eagles", "Cowboys", "Cardinals",
+            "Bears", "Lions", "Packers", "Vikings",
+            "Buccaneers", "Falcons", "Rams", "Saints", "49ers", "Chargers"
+        ]
+    },
+    "rbi_baseball": {
+        name: "RBI Baseball",
+        teams: [
+            "Boston", "California", "Detroit", "Houston", "Minnesota",
+            "New York", "St. Louis", "San Francisco", "Texas", "Los Angeles"
+        ]
+    },
+    "little_league_baseball": {
+        name: "Little League Baseball: Championship Series",
+        teams: [
+            "Arizona", "California", "Canada", "Chinese Taipei", "Florida",
+            "Hawaii", "Illinois", "Italy", "Japan", "Korea", "Mexico",
+            "New York", "Pennsylvania", "Puerto Rico", "Spain", "Texas"
+        ]
+    },
+    "baseball_stars": {
+        name: "Baseball Stars",
+        teams: [
+            "American Dreams", "Brave Warriors", "Ghastly Monsters", "Japan Robins",
+            "Lovely Ladies", "Ninja BlackSox", "SNK Crushers", "World Powers"
+        ]
+    },
+    "tecmo_bowl": {
+        name: "Tecmo Bowl",
+        teams: [
+            "Chicago", "Cleveland", "Dallas", "Denver", "Indianapolis",
+            "Los Angeles", "Miami", "Minnesota", "New York", "San Francisco",
+            "Seattle", "Washington"
+        ]
+    },
+    "ice_hockey": {
+        name: "Ice Hockey",
+        teams: [
+            "United States", "Sweden", "Poland", "Canada", "Soviet Union", "Czechoslovakia"
+        ]
+    },
+    "blades_of_steel": {
+        name: "Blades of Steel",
+        teams: [
+            "Toronto", "Vancouver", "Montreal", "Edmonton", "New York",
+            "Chicago", "Los Angeles", "Minnesota"
+        ]
+    },
+    "base_wars": {
+        name: "Base Wars",
+        teams: [
+            "Boston", "California", "Chicago", "Detroit", "Houston", "Minnesota",
+            "New York", "San Diego", "San Francisco", "St. Louis", "Texas", "Toronto"
+        ]
+    },
+    "dusty_diamonds_softball": {
+        name: "Dusty Diamond's All-Star Softball",
+        teams: [
+            "Aces", "Braves", "Comets", "Dodgers", "Eagles", "Flames", "Giants",
+            "Hawks", "Icons", "Jets", "Kings", "Lions", "Meteors", "Ninjas",
+            "Owls", "Pirates", "Queens", "Rebels", "Stars", "Titans", "Unions",
+            "Vikings", "Warriors", "X-Men", "Yankees", "Zephyrs", "The Amazons"
+        ]
+    }
+};
