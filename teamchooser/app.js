@@ -92,7 +92,10 @@ function renderPlayerInputs() {
 
         const input = document.createElement('input');
         input.type = 'text';
-        input.value = savedNames[i] || `Player ${i + 1}`;
+        input.placeholder = `Player ${i + 1}`;
+        if (savedNames[i]) {
+            input.value = savedNames[i];
+        }
         input.style.flex = '1';
 
         group.appendChild(label);
@@ -133,7 +136,7 @@ function handleStart() {
 
     // Gather state
     const playerInputs = Array.from(DOM.playerNamesContainer.querySelectorAll('input[type="text"]'));
-    state.players = playerInputs.map(input => input.value.trim() || 'Anonymous');
+    state.players = playerInputs.map((input, i) => input.value.trim() || `Player ${i + 1}`);
     state.gameId = DOM.gameSelect.value;
     state.allowDuplicates = DOM.allowDuplicates.checked;
 
