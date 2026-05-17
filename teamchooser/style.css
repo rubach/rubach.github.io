@@ -331,6 +331,14 @@ select:focus {
     width: 100%;
 }
 
+.team-logo {
+    width: 64px;
+    height: 64px;
+    margin-right: 15px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
 .slot-overlay {
     position: absolute;
     top: 0;

@@ -43,13 +43,18 @@ const DOM = {
 // Initialization
 function init() {
     populateGames();
+    updateMaxPlayers();
     renderPlayerInputs();
     renderExcludeList();
 
     // Event Listeners
     DOM.numPlayers.addEventListener('change', renderPlayerInputs);
     DOM.numPlayers.addEventListener('input', renderPlayerInputs);
-    DOM.gameSelect.addEventListener('change', renderExcludeList);
+    DOM.gameSelect.addEventListener('change', () => {
+        updateMaxPlayers();
+        renderExcludeList();
+    });
+    DOM.allowDuplicates.addEventListener('change', updateMaxPlayers);
     DOM.excludeToggle.addEventListener('change', (e) => {
         DOM.excludeContainer.classList.toggle('hidden', !e.target.checked);
     });
@@ -59,6 +64,28 @@ function init() {
 }
 
 // Setup View Logic
+function updateMaxPlayers() {
+    const gameId = DOM.gameSelect.value;
+    if (!gameId) return;
+
+    let maxPlayers = 30;
+    if (!DOM.allowDuplicates.checked) {
+        maxPlayers = GAMES_DATA[gameId].teams.length;
+    }
+
+    DOM.numPlayers.max = maxPlayers;
+
+    const label = document.querySelector('label[for="num-players"]');
+    if (label) {
+        label.textContent = `Number of Players (1-${maxPlayers})`;
+    }
+
+    if (parseInt(DOM.numPlayers.value) > maxPlayers) {
+        DOM.numPlayers.value = maxPlayers;
+        renderPlayerInputs();
+    }
+}
+
 function populateGames() {
     DOM.gameSelect.innerHTML = '';
     for (const [id, game] of Object.entries(GAMES_DATA)) {
@@ -71,8 +98,9 @@ function populateGames() {
 
 function renderPlayerInputs() {
     let count = parseInt(DOM.numPlayers.value) || 1;
+    const max = parseInt(DOM.numPlayers.max) || 30;
     if (count < 1) count = 1;
-    if (count > 28) count = 28;
+    if (count > max) count = max;
 
     const currentInputs = Array.from(DOM.playerNamesContainer.querySelectorAll('input'));
     const savedNames = currentInputs.map(input => input.value);
@@ -197,11 +225,22 @@ function prepareNextPlayer() {
 function createSlotItem(text) {
     const el = document.createElement('div');
     el.className = 'slot-item';
-    el.textContent = text;
+
+    if (state.gameId === 'tecmo_super_bowl' && text !== '???') {
+        const logoPath = `logos/${text.toLowerCase().replace(/ /g, "_").replace(/\./g, "")}.webp`;
+        const img = document.createElement('img');
+        img.src = logoPath;
+        img.className = 'team-logo';
+        el.appendChild(img);
+    }
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = text;
+    el.appendChild(textSpan);
 
     // Scale down text if it's too long
     if (text.length > 8) {
-        el.style.fontSize = '1.25rem';
+        textSpan.style.fontSize = '1.25rem';
     }
 
     return el;
@@ -267,14 +306,36 @@ function handleSpinTap() {
         state.availableTeams.splice(winnerIndex, 1);
     }
 
+    const getDifferentTeam = (exclude) => {
+        const pool = state.availableTeams.length > 1 ? state.availableTeams : GAMES_DATA[state.gameId].teams;
+        if (!pool || pool.length === 0) return "???";
+        let pick;
+        let attempts = 0;
+        do {
+            pick = pool[Math.floor(getRandomNumber() * pool.length)];
+            attempts++;
+        } while (pick === exclude && attempts < 20);
+        return pick;
+    };
+
+    // Ensure the pre-built item just before the winner isn't the same as the winner
+    const lastItem = DOM.slotReel.lastChild;
+    if (lastItem && lastItem.textContent === winnerTeam) {
+        DOM.slotReel.removeChild(lastItem);
+        DOM.slotReel.appendChild(createSlotItem(getDifferentTeam(winnerTeam)));
+    }
+
     // Determine the position to stop. We append the winner to the end of the reel
     const winnerEl = createSlotItem(winnerTeam);
     DOM.slotReel.appendChild(winnerEl);
 
     // Add some padding after the winner so it doesn't spin past the bottom
+    let previousTeam = winnerTeam;
     for (let i = 0; i < 2; i++) {
-        const pad = createSlotItem(state.availableTeams[Math.floor(getRandomNumber() * state.availableTeams.length)] || "???");
+        const padTeam = getDifferentTeam(previousTeam);
+        const pad = createSlotItem(padTeam);
         DOM.slotReel.appendChild(pad);
+        previousTeam = padTeam;
     }
 
     const itemsCount = DOM.slotReel.children.length;

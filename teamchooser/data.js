@@ -68,5 +68,11 @@ const GAMES_DATA = {
             "Owls", "Pirates", "Queens", "Rebels", "Stars", "Titans", "Unions",
             "Vikings", "Warriors", "X-Men", "Yankees", "Zephyrs", "The Amazons"
         ]
+    },
+    "double_dribble": {
+        name: "Double Dribble",
+        teams: [
+            "Boston", "Chicago", "Los Angeles", "New York"
+        ]
     }
 };
