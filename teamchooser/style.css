@@ -204,6 +204,10 @@ select:focus {
     border-radius: 5px;
 }
 
+#exclude-teams-container.scrollable {
+    max-height: 112px;
+}
+
 /* Custom scrollbar for inner containers */
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
