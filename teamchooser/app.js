@@ -412,6 +412,12 @@ function showSummary() {
     showView('summary');
     DOM.resultsList.innerHTML = '';
 
+    if (state.gameId === 'dusty_diamonds_softball') {
+        DOM.resultsList.classList.add('roster-layout');
+    } else {
+        DOM.resultsList.classList.remove('roster-layout');
+    }
+
     state.results.forEach(res => {
         const row = document.createElement('div');
         row.className = 'result-row';

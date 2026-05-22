@@ -367,6 +367,12 @@ select:focus {
     margin-bottom: 20px;
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid var(--crt-green-dim);
+    display: flex;
+    flex-direction: column;
+}
+
+#results-list.roster-layout {
+    flex-direction: row;
 }
 
 .result-row {
@@ -377,8 +383,15 @@ select:focus {
     font-size: 1.4rem;
 }
 
+.roster-layout .result-row {
+    flex: 1;
+    border-bottom: none;
+    border-right: 1px dashed #333;
+}
+
 .result-row:last-child {
     border-bottom: none;
+    border-right: none;
 }
 
 .result-player {
