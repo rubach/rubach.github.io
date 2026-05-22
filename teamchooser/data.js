@@ -63,10 +63,15 @@ const GAMES_DATA = {
     "dusty_diamonds_softball": {
         name: "Dusty Diamond's All-Star Softball",
         teams: [
-            "Aces", "Braves", "Comets", "Dodgers", "Eagles", "Flames", "Giants",
-            "Hawks", "Icons", "Jets", "Kings", "Lions", "Meteors", "Ninjas",
-            "Owls", "Pirates", "Queens", "Rebels", "Stars", "Titans", "Unions",
-            "Vikings", "Warriors", "X-Men", "Yankees", "Zephyrs", "The Amazons"
+            "Gary", "Ace", "Don", "Cap", "Fuji", "Rip", "Clark", "Gene",
+            "Alan", "Casey", "Doug", "Jimmy", "Biff", "Davy D", "Slick",
+            "Chuck", "Woody", "Mudcat", "Eddie", "Rocky", "Sid", "Leon",
+            "Jose", "Harry", "Johnny", "Froggy", "Arnie", "Joey", "Rodney",
+            "Peter", "Lance", "Dizzy", "Zelda", "Larry", "Stan", "Diablo",
+            "Kirk", "Bruno", "Mikey", "Slash", "Babe", "Ronnie", "Big Al",
+            "Claude", "Ross", "Rock", "Boris", "Louis", "Flip", "Matt",
+            "Josh", "Binky", "Sparky", "Brian", "Bela", "Tony", "Artie",
+            "Mike", "Glenn", "Sunny"
         ]
     },
     "double_dribble": {

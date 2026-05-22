@@ -69,7 +69,9 @@ function updateMaxPlayers() {
     if (!gameId) return;
 
     let maxPlayers = 30;
-    if (!DOM.allowDuplicates.checked) {
+    if (gameId === 'dusty_diamonds_softball') {
+        maxPlayers = 2;
+    } else if (!DOM.allowDuplicates.checked) {
         maxPlayers = GAMES_DATA[gameId].teams.length;
     }
 
@@ -179,8 +181,13 @@ function handleStart() {
     state.availableTeams = allTeams.filter(team => !state.excludedTeams.includes(team));
 
     // Validation
-    if (!state.allowDuplicates && state.players.length > state.availableTeams.length) {
-        DOM.setupError.textContent = `Not enough teams! You have ${state.players.length} players but only ${state.availableTeams.length} available teams. Allow duplicates or reduce exclusions.`;
+    let requiredTeams = state.players.length;
+    if (state.gameId === 'dusty_diamonds_softball') {
+        requiredTeams = state.players.length * 10;
+    }
+    
+    if (!state.allowDuplicates && state.availableTeams.length < requiredTeams) {
+        DOM.setupError.textContent = `Not enough available! You need ${requiredTeams} but only ${state.availableTeams.length} are available. Allow duplicates or reduce exclusions.`;
         DOM.setupError.classList.remove('hidden');
         return;
     }
@@ -195,6 +202,33 @@ function handleStart() {
     state.currentPlayerIndex = 0;
     state.results = [];
     isWaitingForNext = false;
+
+    if (state.gameId === 'dusty_diamonds_softball') {
+        let pool = [...state.availableTeams];
+        for (let i = pool.length - 1; i > 0; i--) {
+            const j = Math.floor(getRandomNumber() * (i + 1));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        
+        for (let p of state.players) {
+            let roster = [];
+            for (let i = 0; i < 10; i++) {
+                if (pool.length > 0) {
+                    roster.push(pool.pop());
+                } else if (state.allowDuplicates) {
+                    roster.push(state.availableTeams[Math.floor(getRandomNumber() * state.availableTeams.length)]);
+                } else {
+                    roster.push("???");
+                }
+            }
+            state.results.push({
+                player: p,
+                team: roster
+            });
+        }
+        showSummary();
+        return;
+    }
 
     startSpinPhase();
 }
@@ -381,6 +415,10 @@ function showSummary() {
     state.results.forEach(res => {
         const row = document.createElement('div');
         row.className = 'result-row';
+        
+        if (Array.isArray(res.team)) {
+            row.classList.add('roster-row');
+        }
 
         const playerDiv = document.createElement('div');
         playerDiv.className = 'result-player';
@@ -388,7 +426,31 @@ function showSummary() {
 
         const teamDiv = document.createElement('div');
         teamDiv.className = 'result-team';
-        teamDiv.textContent = res.team;
+        
+        if (Array.isArray(res.team)) {
+            teamDiv.classList.add('roster-grid');
+            res.team.forEach(t => {
+                const charDiv = document.createElement('div');
+                charDiv.className = 'roster-character';
+                
+                if (state.gameId === 'dusty_diamonds_softball') {
+                    const img = document.createElement('img');
+                    const safeName = t.toLowerCase().replace(/ /g, "_").replace(/\./g, "");
+                    img.src = `logos/${safeName}.png`;
+                    img.alt = t;
+                    img.className = 'portrait-img';
+                    charDiv.appendChild(img);
+                }
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = t;
+                charDiv.appendChild(nameSpan);
+                
+                teamDiv.appendChild(charDiv);
+            });
+        } else {
+            teamDiv.textContent = res.team;
+        }
 
         row.appendChild(playerDiv);
         row.appendChild(teamDiv);
