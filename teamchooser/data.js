@@ -14,7 +14,7 @@ const GAMES_DATA = {
         name: "RBI Baseball",
         teams: [
             "Boston", "California", "Detroit", "Houston", "Minnesota",
-            "New York", "St. Louis", "San Francisco", "Texas", "Los Angeles"
+            "New York", "St. Louis", "San Francisco"
         ]
     },
     "little_league_baseball": {
